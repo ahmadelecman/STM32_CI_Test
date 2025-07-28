@@ -1,0 +1,56 @@
+# STM32CubeIDE and Eclipse
+.settings/
+.metadata/
+*.launch
+*.user
+*.cproject
+*.project
+
+# STM32CubeMX
+*.ioc
+
+# Build artifacts
+build/
+Build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.o
+*.d
+*.elf
+*.bin
+*.hex
+*.map
+*.list
+*.srec
+*.su
+*.exe
+*.log
+*.dep
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Python cache (if you use scripts)
+__pycache__/
+*.pyc
+
+# Backup and temp files
+*.bak
+*.tmp
+*.swp
+*.swo
+
+# Archive files
+*.zip
+*.tar.gz
+*.tar
+*.gz
+*.7z
+
+# SVD files (optional, if you use them for debugging)
+*.svd
+
+
