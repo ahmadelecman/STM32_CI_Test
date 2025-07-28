@@ -6,9 +6,6 @@
 *.cproject
 *.project
 
-# STM32CubeMX
-*.ioc
-
 # Build artifacts
 build/
 Build/
