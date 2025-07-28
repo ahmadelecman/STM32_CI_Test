@@ -20,14 +20,21 @@ jobs:
         sudo apt-get install -y cmake build-essential
         # Verify CMake installation
         cmake --version || { echo "CMake installation failed"; exit 1; }
+        
+    - name: Check CMake installation
+      run: |
+        which cmake
+        cmake --version
 
     - name: Install ARM GNU Toolchain
       run: |
         # Install ARM GNU Toolchain 13.2.Rel1 (closest to STM32CubeIDE's 13.3.rel1)
         wget -qO- https://developer.arm.com/-/media/Files/downloads/gnu/13.2.Rel1/binrel/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi.tar.xz | tar -xJ -C ~/
         echo "~/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin" >> $GITHUB_PATH
-        # Verify toolchain installation
-        arm-none-eabi-gcc --version || { echo "ARM GNU Toolchain installation failed"; exit 1; }
+
+    - name: Verify ARM GNU Toolchain
+      run: |
+        arm-none-eabi-gcc --version || { echo "ARM GNU Toolchain verification failed"; exit 1; }
 
     - name: Create build directory
       run: mkdir -p build
