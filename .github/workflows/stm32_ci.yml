@@ -14,46 +14,25 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Install CMake and build-essential
+    - name: Install ARM GCC Toolchain
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake build-essential
-        # Verify CMake installation
-        cmake --version || { echo "CMake installation failed"; exit 1; }
-        
+        sudo apt-get install -y gcc-arm-none-eabi build-essential
+
+    - name: Set up CMake
+      uses: lukka/get-cmake@v3.27.7
+
     - name: Check CMake installation
       run: |
         which cmake
         cmake --version
 
-    - name: Install ARM GNU Toolchain
-      run: |
-        # Install ARM GNU Toolchain 13.2.Rel1 (closest to STM32CubeIDE's 13.3.rel1)
-        wget -qO- https://developer.arm.com/-/media/Files/downloads/gnu/13.2.Rel1/binrel/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi.tar.xz | tar -xJ -C ~/
-        echo "~/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin" >> $GITHUB_PATH
-
-    - name: Verify ARM GNU Toolchain
-      run: |
-        arm-none-eabi-gcc --version || { echo "ARM GNU Toolchain verification failed"; exit 1; }
-
     - name: Create build directory
-      run: mkdir -p build
+      run: mkdir build
 
     - name: Configure CMake with ARM toolchain
       run: cmake -S . -B build -DCMAKE_TOOLCHAIN_FILE=cmake/gcc-arm-none-eabi.cmake -DCMAKE_BUILD_TYPE=Debug
-      env:
-        PATH: "~/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin:${{ env.PATH }}"
 
     - name: Build
-      run: cmake --build build --config Debug
-
-    - name: Upload firmware artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: firmware-artifacts
-        path: |
-          build/*.elf
-          build/*.hex
-          build/*.bin
-        if-no-files-found: error
+      run: cmake --build build
         
