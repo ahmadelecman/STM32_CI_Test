@@ -42,4 +42,35 @@ jobs:
 
     - name: Build
       run: cmake --build build
+      
+    # Save the build outputs as artifacts for the next job
+    - name: Save firmware files for upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: firmware-files
+        path: |
+          build/STM32L476RG_Cpp_test3.hex
+          build/STM32L476RG_Cpp_test3.bin
+          
+  upload:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download firmware files from build job
+      uses: actions/download-artifact@v4
+      with:
+        name: firmware-files
+        path: firmware
+
+    - name: Upload HEX file
+      uses: actions/upload-artifact@v4
+      with:
+        name: firmware-hex
+        path: firmware/STM32L476RG_Cpp_test3.hex
+
+    - name: Upload BIN file
+      uses: actions/upload-artifact@v4
+      with:
+        name: firmware-bin
+        path: firmware/STM32L476RG_Cpp_test3.bin   
         
