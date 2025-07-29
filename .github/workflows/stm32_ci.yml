@@ -18,6 +18,11 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y gcc-arm-none-eabi build-essential
+        
+    - name: Check ARM GCC toolchain installation
+      run: |
+        which arm-none-eabi-gcc
+        arm-none-eabi-gcc --version
 
     - name: Set up CMake
       uses: lukka/get-cmake@v3.27.7
