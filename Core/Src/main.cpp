@@ -94,8 +94,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	HAL_GPIO_TogglePin(LED_Port, LED_Pin);
-	HAL_Delay(500);
+  	/* Blink the LED every 500ms */
+  	HAL_GPIO_TogglePin(LED_Port, LED_Pin);
+  	HAL_Delay(500);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
