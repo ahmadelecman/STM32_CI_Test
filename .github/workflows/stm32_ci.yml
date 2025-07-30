@@ -48,7 +48,12 @@ jobs:
         sudo apt-get install -y cppcheck
         cppcheck --enable=all --inconclusive --std=c++17 --quiet \
           --suppress=missingIncludeSystem \
-          Core/Src Drivers/STM32L4xx_HAL_Driver/Src 2> cppcheck_report.txt
+          -ICore/Inc \
+          -IDrivers/STM32L4xx_HAL_Driver/Inc \
+          -IDrivers/STM32L4xx_HAL_Driver/Inc/Legacy \
+          -IDrivers/CMSIS/Device/ST/STM32L4xx/Include \
+          -IDrivers/CMSIS/Include \
+          Core/Src Core/Src Drivers/STM32L4xx_HAL_Driver/Src 2> cppcheck_report.txt
 
     - name: Upload Cppcheck report
       uses: actions/upload-artifact@v4
